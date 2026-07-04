@@ -52,16 +52,7 @@ python build_notebook.py
 jupyter nbconvert --to notebook --execute --inplace churn_prediction.ipynb
 ```
 
-## Push to GitHub
 
-```bash
-git init
-git add .
-git commit -m "Customer churn prediction - EDA, SMOTE, model comparison, feature importance"
-git branch -M main
-git remote add origin https://github.com/<your-username>/churn-prediction.git
-git push -u origin main
-```
 
 ## Key results (from the executed notebook)
 - Dataset churn rate: 26.5% (imbalanced — accuracy alone would be misleading)
@@ -76,16 +67,3 @@ git push -u origin main
   (month-to-month), tenure, monthly charges, lack of online security/tech
   support add-ons
 
-## Interview talking points
-- "Why SMOTE only on the training set, not the test set?" → applying it to
-  test data would leak synthetic samples into evaluation and inflate scores
-  artificially — the test set has to reflect the real world.
-- "Why F1/ROC-AUC instead of accuracy?" → with 73%/27% class split, a model
-  that always predicts 'no churn' gets 73% accuracy while being useless.
-- "Why recall over precision for churn?" → a missed churner (false
-  negative) costs the business a lost customer; a false alarm (false
-  positive) just costs a wasted retention email — asymmetric cost, so
-  recall matters more.
-- "What would you improve?" → hyperparameter tuning (GridSearch/Optuna),
-  try SMOTE variants (ADASYN, Borderline-SMOTE), add cost-sensitive
-  learning instead of oversampling, deploy as an API for real-time scoring.
